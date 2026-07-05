@@ -1,0 +1,56 @@
+[tool.poetry]
+name = "{{cookiecutter.project_slug}}"
+version = "0.1.0"
+description = ""
+authors = {{ cookiecutter.authors.split(",")|replace("'", '"') }}
+readme = "README.md"
+package-mode = false
+
+[tool.poetry.dependencies]
+python = "^3.10"
+swagger-coverage = {url = "https://github.com/YuliaOrl/swagger-coverage-py/archive/refs/heads/master.zip"}
+aiohttp = "^3.14.1"
+pydantic = "^2.13.4"
+faker = "^40.23.0"
+pyhamcrest = "^2.1.0"
+pytest = "^9.1.0"
+allure-pytest = "^2.16.0"
+structlog = "^26.1.0"
+pyyaml = "^6.0.3"
+rootpath = "0.1.0"
+pytelegrambotapi = "^4.34.0"
+pytest-telegram-notifier = "^1.4.0"
+environs = "^15.0.1"
+vyper-config = "^1.2.1"
+python-dotenv = "^1.2.2"
+six = "^1.17.0"
+httpx = "^0.28.1"
+curlify2 = "^2.0.0"
+pytest-asyncio = "^1.4.0"
+datamodel-code-generator = "^0.66.0"
+restcodegen = "^2.0.1"
+
+
+[tool.poetry.group.lint.dependencies]
+ruff = "^0.15.18"
+mypy = "^2.1.0"
+
+[tool.ruff]
+line-length = 120
+
+extend-exclude = [
+#    "checkers"
+]
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.pytest.ini_options]
+addopts = """
+    --alluredir=../allure-results
+    --telegram-notifier
+    --telegram-notifier-config-file=telegram-notifier-config.ini
+"""
+
+asyncio_mode = "auto"

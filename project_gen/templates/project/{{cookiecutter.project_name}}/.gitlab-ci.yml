@@ -1,0 +1,6 @@
+include:
+  - project: "ZolaPetrova/common-pipe"
+    file: "/qa/.common-qa-pipeline.yml"
+
+variables:
+  SWAGGER_URL: ${SWAGGER_URL}
