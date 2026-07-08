@@ -2,7 +2,7 @@ import os.path
 import pathlib
 import platform
 import shutil
-
+import toml
 from project_gen.utils.utils import run_command
 
 
@@ -41,8 +41,31 @@ def replace_import_in_files(directory: str, package_name: str) -> None:
             line = line.replace(
                 f"klass = getattr({package_name}.models, klass)",
                 f"klass = getattr(clients.http.{package_name}.models, klass)"
-                )
+            )
             update_lines.append(line)
 
         with open(file_path, "w", encoding="utf-8") as file:
             file.writelines(update_lines)
+
+
+def generate(templates: str | None = None) -> None:
+    with open("testproject.toml") as config_file:
+        config = toml.load(config_file)
+
+    http_services = config.get("http")
+    if not http_services:
+        print("❌ Ошибка: В файле testproject.toml не найдена секция [[http]].")
+        print("Заполни конфигурацию для тестового проекта, укажи в файле testproject.toml необходимые ресурсы сервисов.")
+        return
+
+    for http_service in config["http"]:
+        package_name = http_service["service_name"].replace("-", "_")
+        swagger_url = http_service["swagger"]
+
+        generate_api(
+            package_name=package_name,
+            swagger_url=swagger_url,
+            templates=templates,
+        )
+        move_files(package_name=package_name)
+        replace_import_in_files(directory="clients/http", package_name=package_name)
