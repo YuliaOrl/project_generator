@@ -1,0 +1,16 @@
+[tool.poetry]
+name = "project-generator"
+version = "0.1.0"
+description = ""
+authors = ["Yulia <orbitalik32@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.14"
+cookiecutter = "^2.7.1"
+requests = "^2.34.2"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
