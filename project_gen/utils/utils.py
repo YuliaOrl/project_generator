@@ -52,8 +52,3 @@ def create_project() -> None:
         extra_context=extra_context
     )
     print("Project created")
-
-
-# create_project()
-
-
