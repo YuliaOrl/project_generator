@@ -1,3 +1,9 @@
-telegram:
-  chat_id: ''
-  token: ''
+# Заполни конфигурацию для тестового проекта, укажи в нем необходимые ресурсы, например:
+
+#telegram:
+#  chat_id: ''
+#  token: ''
+
+#service:
+#    register_service_account_api: "http://185.185.143.231:8085/register"
+#    mail_service_mail_api: "http://185.185.143.231:5025"
