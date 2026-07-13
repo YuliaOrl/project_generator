@@ -1,14 +1,15 @@
 import os.path
 import pathlib
-import platform
 import shutil
+import sys
 import toml
 from project_gen.utils.utils import run_command
 
 
 def generate_api(package_name: str, swagger_url: str, templates: str | None = None) -> None:
     templates = templates or str(pathlib.Path(__file__).parent.parent / "templates" / "python")
-    target_dir = ".venv/Scripts" if platform.system() == "Windows" else ".venv/bin"
+    python_executable = pathlib.Path(sys.executable)
+    target_dir = python_executable.parent
     command = ["java", "-jar", f"{target_dir}/openapi-generator-cli-7.23.0.jar", "generate", "-i", swagger_url, "-g",
                "python", "-o", package_name, "--library", "asyncio", "--package-name", package_name,
                "--skip-validate-spec", ]
@@ -55,7 +56,7 @@ def generate(templates: str | None = None) -> None:
     http_services = config.get("http")
     if not http_services:
         print("❌ Ошибка: В файле testproject.toml не найдена секция [[http]].")
-        print("Заполни конфигурацию для тестового проекта, укажи в файле testproject.toml необходимые ресурсы сервисов.")
+        print("Заполни конфигурацию для тестового проекта, укажи в файлах testproject.toml и stg.yaml необходимые ресурсы сервисов.")
         return
 
     for http_service in config["http"]:

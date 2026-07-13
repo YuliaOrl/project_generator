@@ -1,9 +1,10 @@
 # Заполни конфигурацию для тестового проекта, укажи в нем необходимые ресурсы, например:
 
 #[[http]]
-#service_name = "example_service_01"
-#swagger = "http://example_service_01/example-api/openapi.json"
+#service_name = "register_service"
+#swagger = "http://185.185.143.231:8085/register/openapi.json"
+
 
 #[[http]]
-#service_name = "example_service_02"
-#swagger = "http://example_service_02/example-api/openapi.json"
+#service_name = "mail_service"
+#swagger = "http://185.185.143.231:8085/mail/openapi.json"
