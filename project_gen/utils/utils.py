@@ -1,4 +1,4 @@
-import pathlib
+import shutil
 import subprocess
 import sys
 from pathlib import Path
@@ -36,13 +36,13 @@ def get_git_repository_info() -> str:
 
 
 def create_project(template: str | None = None) -> None:
-    template = template or str(pathlib.Path(__file__).parent.parent / "templates" / "project")
+    template = template or str(Path(__file__).parent.parent / "templates" / "project")
     print("Creating project")
     check_git_repository()
     user_email, authors = get_git_user_info()
     remote = get_git_repository_info()
     print(f"{authors} <{user_email}>")
-    parent_dir = Path().cwd().parent
+    parent_dir = Path().cwd()
     extra_context = {
         "user_email": user_email,
         "authors": authors,
@@ -56,6 +56,15 @@ def create_project(template: str | None = None) -> None:
         output_dir=parent_dir,
         extra_context=extra_context
     )
+    empty_folder = parent_dir / remote
+    if empty_folder.exists() and empty_folder.is_dir() and not any(empty_folder.iterdir()):
+        try:
+            shutil.rmtree(empty_folder)
+            print(f"✅ Временная пустая папка '{remote}' успешно удалена.")
+        except Exception as e:
+            print(f"⚠️ Не удалось удалить временную папку '{remote}': {e}")
+            print(f"Необходимо вручную удалить пустую папку '{remote}'")
+
     print("Project created")
 
 
